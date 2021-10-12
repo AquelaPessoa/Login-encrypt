@@ -1,5 +1,5 @@
 from UI import UI
-from banco import BancoDados
+from banco_de_dados import BancoDados
 
 windowns = UI(['Logar', 'Criar login', 'Sair']) #Recebe as opções em uma lista
 banco_de_dados = BancoDados()
@@ -21,5 +21,3 @@ while True:
             windowns.mensagem_color('Acesso negado', windowns.colors['FAIL'])
     elif event == 3:
         break
-
-        

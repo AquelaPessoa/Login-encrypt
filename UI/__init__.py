@@ -2,7 +2,7 @@ from os import system
 
 #Class dedicada a trabalhar com a IU
 
-class UI:
+class UI():
     def __init__(self, ops: list):
         self.entrada = ops
         self.ops = ops
