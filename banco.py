@@ -1,4 +1,5 @@
 from hashlib import sha256 #Importando funções para encriptografar
+import mysql.connector
 
 #Class dedicada a trabalhar com o banco de dados
 
@@ -8,7 +9,10 @@ class BancoDados():
         self.senha = ''
 
         self._admin_login = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'
-        self._admin_senha = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918' 
+        self._admin_senha = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'
+
+        self._db = None
+        self._cursor = None
 
     #Encripta e retorna a str
     def encode_dado(self, txt: str) -> str:
@@ -29,3 +33,14 @@ class BancoDados():
 
     def salvar_dados(self):
         pass
+
+    def start(self) -> bool:
+        try:
+            self._db = mysql.connector.connect(host="localhost", user="root", passwd="", database="aps_test")
+            self._cursor = self._db.cursor()
+            return True
+
+        except mysql.connector.Error:
+            return False
+
+        
