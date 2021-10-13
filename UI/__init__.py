@@ -3,8 +3,9 @@ from os import system
 #Class dedicada a trabalhar com a IU
 
 class UI():
-    def __init__(self, ops: list):
+    def __init__(self, ops: list, name: str):
         self.entrada = ops
+        self.name = name
         self.ops = ops
         self.colors = {"HEADER": '\033[95m',
                         "OKBLUE": '\033[94m',
@@ -21,11 +22,12 @@ class UI():
         self.entrada = 0
         system('cls')
 
+        print(self.name + '\n')
         [print(f'{self.ops.index(op) + 1} - {op}\n') for op in self.ops] #For em uma linha, com função de imprimir as opção do usuário
         self.receber_verificar_entrada()
 
-    #Função que verifica se o valor entrado é valido nas opções
-    def receber_verificar_entrada(self):
+    
+    def receber_verificar_entrada(self): #Função que verifica se o valor entrado é valido nas opções
         try:
             self.entrada = int(input('Opção: '))
 
@@ -35,7 +37,7 @@ class UI():
         except ValueError:
             self.mensagem_color('Valor invalido', self.colors['WARNING'])
 
-    #Função que imprime mensagens coloridas
-    def mensagem_color(self, text: str, color: str):
+    
+    def mensagem_color(self, text: str, color: str): #Função que imprime mensagens coloridas
         print(color + text + self.colors['ENDC'])
         input()

@@ -8,14 +8,11 @@ class BancoDados():
         self.login = ''
         self.senha = ''
 
-        self._admin_login = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'
-        self._admin_senha = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'
-
         self._db = None
         self._cursor = None
 
-    #Encripta e retorna a str
-    def encode_dado(self, txt: str) -> str:
+    
+    def encode_dado(self, txt: str) -> str: #Encripta e retorna a str
         return sha256(txt.encode()).hexdigest()
 
 
@@ -23,16 +20,28 @@ class BancoDados():
         self.login = self.encode_dado(input('Login: '))
         self.senha = self.encode_dado(input('Senha: '))
 
-    #Verifica login e senha do adm (pode mudar)
-    def verificar_adm(self) -> bool:
-        if self._admin_login == self.encode_dado(input("Adm login: ")) and self._admin_senha == self.encode_dado(input("Adm senha: ")):
-            return True
-        else:
-            return False
+    
+    def consultar_dados(self): #Verifica login e senha do adm
+        self._cursor.execute("select * from users")
+        dados = self._cursor.fetchall()
+        
+        for user in dados:
+            if user[1] == self.login and user[2] == self.senha:
+                return True, user
+
+        return False, None
 
 
-    def salvar_dados(self):
-        pass
+    def insert_dados(self): #Adiciona um novo usuario no banco
+        userName = self.encode_dado(input('Login: '))
+        password = self.encode_dado(input('Passworld: '))
+        autorizacao = input('Tem autorização adm: ').lower().replace('sim','true').replace('não','false')
+
+        command = "INSERT INTO users (userName, password, autorizacao) VALUES ('%s','%s','%s')" % (userName,password,autorizacao)
+
+        self._cursor.execute(command)
+        self._db.commit()
+
 
     def start(self) -> bool:
         try:
@@ -42,5 +51,3 @@ class BancoDados():
 
         except mysql.connector.Error:
             return False
-
-        
