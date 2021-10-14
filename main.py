@@ -21,7 +21,7 @@ while True:
                 event_user = tela_user.entrada
 
                 if event_user == 1: #Ver documentos
-                    print("OLHA ISSO QUE LEGAL")
+                    print("Documento super secreto, só pessoas autorizadas podem ver")
                     input()
                 elif event_user == 2: #ADD users
                     if user[3]: #Verifica a permissão
