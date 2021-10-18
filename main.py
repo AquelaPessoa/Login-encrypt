@@ -16,16 +16,16 @@ while True:
             banco_de_dados.pegar_dados()
             res = banco_de_dados.consultar_dados()
             user = res[1]
-
             
             while res[0]:
                 tela_user.start()
                 event_user = tela_user.entrada
 
+                #Criando lista de arquivos
                 arquivos = []
                 [arquivos.append(arquivo) for _, _, arquivo in os.walk("./documents/")]
                 arquivos = arquivos[0]
-
+                
                 tela_documentos = UI(arquivos, "Documentos")
 
                 if event_user == 1: #Ver documentos
