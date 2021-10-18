@@ -22,7 +22,7 @@ class BancoDados():
 
     
     def consultar_dados(self): #Verifica login e senha do adm
-        self._cursor.execute("select * from users")
+        self._cursor.execute("select * from usuarios")
         dados = self._cursor.fetchall()
         
         for user in dados:
@@ -37,7 +37,7 @@ class BancoDados():
         password = self.encode_dado(input('Passworld: '))
         autorizacao = input('Tem autorização adm: ').lower().replace('sim','true').replace('não','false')
 
-        command = "INSERT INTO users (userName, password, autorizacao) VALUES ('%s','%s','%s')" % (userName,password,autorizacao)
+        command = "INSERT INTO usuarios (nome, senha, ADM) VALUES ('%s','%s','%s')" % (userName,password,autorizacao)
 
         self._cursor.execute(command)
         self._db.commit()
@@ -45,7 +45,7 @@ class BancoDados():
 
     def start(self) -> bool:
         try:
-            self._db = mysql.connector.connect(host="localhost", user="root", passwd="", database="aps_test")
+            self._db = mysql.connector.connect(host="localhost", user="root", passwd="", database="aps")
             self._cursor = self._db.cursor()
             return True
 
