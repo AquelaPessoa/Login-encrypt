@@ -22,32 +22,47 @@ class BancoDados():
 
     
     def consultar_dados(self): #Verifica login e senha do adm
-        self._cursor.execute("select * from usuarios")
+        self.connect()
+
+        self._cursor.execute("select * from USUARIOS")
         dados = self._cursor.fetchall()
-        
         for user in dados:
             if user[1] == self.login and user[2] == self.senha:
+
+                self.desconnect()
                 return True, user
 
+        self.desconnect()
         return False, None
+
+        
 
 
     def insert_dados(self): #Adiciona um novo usuario no banco
+        self.connect()
         userName = self.encode_dado(input('Login: '))
         password = self.encode_dado(input('Passworld: '))
         autorizacao = input('Tem autorização adm: ').lower().replace('sim','true').replace('não','false')
 
-        command = "INSERT INTO usuarios (nome, senha, ADM) VALUES ('%s','%s','%s')" % (userName,password,autorizacao)
+        command = "INSERT INTO USUARIOS (name_usr, pswd_usr, Adm) VALUES ('%s','%s','%s')" % (userName,password, autorizacao)
 
         self._cursor.execute(command)
         self._db.commit()
+        self.desconnect()
 
 
-    def start(self) -> bool:
+    def connect(self) -> bool:
         try:
-            self._db = mysql.connector.connect(host="localhost", user="root", passwd="", database="aps")
+            self._db = mysql.connector.connect()
             self._cursor = self._db.cursor()
-            return True
 
-        except mysql.connector.Error:
+            return True
+        except:
             return False
+
+    def desconnect(self):
+        self._db.close()
+        
+
+
+

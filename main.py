@@ -6,16 +6,18 @@ inicial = UI(['Logar', 'Sair'], "Site super secreto do governo") #Recebe as opç
 tela_user = UI(['Ver documentos', 'Criar login', 'voltar'], "Bem vindo")
 
 banco_de_dados = BancoDados()
-connect = banco_de_dados.start()
+is_connect = banco_de_dados.connect()
 
 while True:
     inicial.start()
     event_inicial = inicial.entrada #event = entrada da opção
-    if connect:
+
+    if is_connect:
         if event_inicial == 1: #Logar
             banco_de_dados.pegar_dados()
             res = banco_de_dados.consultar_dados()
             user = res[1]
+            print(user)
             
             while res[0]:
                 tela_user.start()
@@ -39,6 +41,7 @@ while True:
                 elif event_user == 2: #ADD users
                     if user[3]: #Verifica a permissão
                         banco_de_dados.insert_dados()
+                        inicial.mensagem_color('Usuario criado', inicial.colors['OKGREEN'])
                     else:
                         inicial.mensagem_color('Acesso negado', inicial.colors['FAIL'])
                 elif event_user == 3: #Volta para tela inicial
@@ -51,4 +54,3 @@ while True:
     
     if event_inicial == 2: #Sair
             break
-     
