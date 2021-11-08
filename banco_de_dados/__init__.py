@@ -51,16 +51,16 @@ class BancoDados():
         self.desconnect()
 
 
-    def connect(self) -> bool:
+    def connect(self) -> bool: #Conectar ao banco de dados
         try:
-            self._db = mysql.connector.connect()
+            self._db = mysql.connector.connect() #Apaguei para não expor dados de integrabtes do grupo
             self._cursor = self._db.cursor()
 
             return True
         except:
             return False
 
-    def desconnect(self):
+    def desconnect(self): #Desconectar o banco de dados
         self._db.close()
         
 

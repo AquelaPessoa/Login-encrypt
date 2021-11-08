@@ -17,7 +17,6 @@ while True:
             banco_de_dados.pegar_dados()
             res = banco_de_dados.consultar_dados()
             user = res[1]
-            print(user)
             
             while res[0]:
                 tela_user.start()
